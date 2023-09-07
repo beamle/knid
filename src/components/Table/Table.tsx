@@ -7,9 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {fetchOrdersTC, Order} from "../Order/reducers/orders-reducer";
+import {deleteOrderTC, fetchOrdersTC, OrderType} from "../Order/reducers/orders-reducer";
 import {AppRootStateType, useAppDispatch} from "../../store";
 import {useSelector} from "react-redux";
+import Order from '../Order/Order';
+import Button from '@mui/material/Button';
+import MyButton from '../MyButton/MyButton';
 
 function createData(
     name: string,
@@ -31,7 +34,7 @@ const rows = [
 
 export default function TableFC() {
     const dispatch = useAppDispatch();
-    const orders = useSelector<AppRootStateType, Order[]>(state => state.orders.orders)
+    const orders = useSelector<AppRootStateType, OrderType[]>(state => state.orders.orders)
 
     useEffect(() => {
         dispatch(fetchOrdersTC())
@@ -39,32 +42,40 @@ export default function TableFC() {
 
     console.log(orders)
 
+    const deleteOrderHandler = (orderNo: string) => {
+        dispatch(deleteOrderTC(orderNo))
+    }
+
 
     return (
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{ minWidth: 650 }} aria-label="table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        <Order/>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {orders.map((order) => (
                         <TableRow
-                            key={row.name}
+                            key={order.orderNo}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
-                                {row.name}
+                                {order.orderNo}
                             </TableCell>
-                            <TableCell align="right">{row.calories}</TableCell>
-                            <TableCell align="right">{row.fat}</TableCell>
-                            <TableCell align="right">{row.carbs}</TableCell>
-                            <TableCell align="right">{row.protein}</TableCell>
+                            <TableCell align="left">{order.date}</TableCell>
+                            <TableCell align="left">{order.customer}</TableCell>
+                            <TableCell align="left">{order.trackingNo}</TableCell>
+                            <TableCell align="left">{order.status}</TableCell>
+                            <TableCell align="left">{order.consignee}</TableCell>
+                            <TableCell align="left">
+                                <MyButton>Change</MyButton>
+                            </TableCell>
+                            <TableCell align="left">
+                                <MyButton
+                                    deleteOrderHandler={() => deleteOrderHandler(order.orderNo)}>Delete</MyButton>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

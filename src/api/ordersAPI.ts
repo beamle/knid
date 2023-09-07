@@ -1,13 +1,13 @@
 import axios from "axios";
+import {OrderType} from "../components/Order/reducers/orders-reducer";
 
-const settings = {
-    withCredentials: true
-}
 
+//TODO currently deleteOrder is sending GET request
 export const ordersAPI = {
     getOrders: () => {
-        const url = "/Shipments.txt";
-        console.log("Request URL:", url); // Log the URL to the console
-        return axios.get(url, settings);
+        return axios.get<OrderType[]>("/Shipments.txt");
+    },
+    deleteOrder: () => {
+        return axios.get<OrderType[]>("/Shipments.txt")
     }
 }
