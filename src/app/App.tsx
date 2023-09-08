@@ -9,9 +9,10 @@ function App() {
 
   return (
     <div className="App">
+        <div className="header"></div>
         <Routes>
             <Route>
-                <Route path="/orderProfile" element={<OrderProfile/>}/>
+                <Route path="/orderProfile/:orderNo" element={<OrderProfile/>}/>
                 <Route path="/" element={<ShipmentsTable/>}/>
             </Route>
         </Routes>
