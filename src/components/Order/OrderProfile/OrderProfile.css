@@ -1,0 +1,8 @@
+.hrT {
+    width: calc(100% - 80px);
+    margin: -24px;
+    top: 25%;
+    position: absolute;
+    border: none;
+    border-bottom: 1px solid #e3e3e3de;
+}

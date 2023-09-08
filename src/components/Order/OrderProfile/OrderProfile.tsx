@@ -1,11 +1,14 @@
 import React from 'react';
-import {OrderType} from '../reducers/orders-reducer';
+import {OrderType, updateOrderTC} from '../reducers/orders-reducer';
 import {useSelector} from 'react-redux';
-import {AppRootStateType} from '../../../store';
-import {Box, Button, Grid, Paper, Typography,} from '@mui/material';
+import {AppRootStateType, useAppDispatch} from '../../../store';
+import {Box, Button, Grid, LinearProgress, Paper, Typography,} from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import {useFormik} from 'formik';
+import {useNavigate} from "react-router-dom";
+import {AppStatusTypes, setStatusAC} from "../../../app/reducers/app-reducer";
+import './OrderProfile.css';
 
 interface Values {
     orderNo: string;
@@ -13,9 +16,22 @@ interface Values {
 }
 
 export const OrderProfile = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
     const orderToUpdate = useSelector<AppRootStateType, OrderType | null>(
         (state) => state.orders.orderToUpdate
     );
+
+    const redirectBackToShipmentsTable = () => {
+        dispatch(setStatusAC('loading'))
+        navigate("/")
+    }
+
+    const updateOrder = (updatedOrder: OrderType) => {
+        dispatch(updateOrderTC(updatedOrder))
+    }
+
 
     const formik = useFormik({
         initialValues: {
@@ -36,28 +52,32 @@ export const OrderProfile = () => {
             }
             return errors;
         },
-        onSubmit: (values, {setSubmitting}) => {
-            setTimeout(() => {
-                setSubmitting(false);
-                alert(JSON.stringify(values, null, 2));
-            }, 500);
+        onSubmit: values => {
+            updateOrder(values)
+            redirectBackToShipmentsTable()
         }
     })
 
     return (
-
-        <Box sx={{ m: 6, mr: 10, flexGrow: 1 }}>
+        <Box sx={{m: 6, mr: 10, flexGrow: 1}}>
             <form onSubmit={formik.handleSubmit}>
-                <Paper sx={{ width: '100%', p: 3 }}>
+                <Paper sx={{width: '100%', pr: 3, pl: 3, pb: 3, pt: 1}}>
+                    <hr className="hrT"/>
+                    <Grid container spacing={2} justifyContent="flex-start">
+                        <Typography variant='subtitle2' sx={{mt: 9, mr: 2, ml: 2, mb: 2, fontWeight: 'bold'}}>
+                            SHIPEMNT DETAILS
+                        </Typography>
+                    </Grid>
+
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Grid container justifyContent="flex-start">
                                 <Grid item>
-                                    <Typography variant='subtitle2' sx={{ mb: 1 }}>
+                                    <Typography variant='subtitle2' sx={{mb: 1, fontWeight: 'bold'}}>
                                         orderNo
                                     </Typography>
                                 </Grid>
-                                <FormControl sx={{ width: '100%' }}>
+                                <FormControl sx={{width: '100%'}}>
                                     <TextField
                                         variant="outlined"
                                         {...formik.getFieldProps('orderNo')}
@@ -68,11 +88,11 @@ export const OrderProfile = () => {
                         <Grid item xs={6}>
                             <Grid container justifyContent="flex-start">
                                 <Grid item>
-                                    <Typography variant='subtitle2' sx={{ mb: 1 }}>
+                                    <Typography variant='subtitle2' sx={{mb: 1, fontWeight: 'bold'}}>
                                         date
                                     </Typography>
                                 </Grid>
-                                <FormControl sx={{ width: '100%' }}>
+                                <FormControl sx={{width: '100%'}}>
                                     <TextField
                                         variant="outlined"
                                         {...formik.getFieldProps('date')}
@@ -83,11 +103,11 @@ export const OrderProfile = () => {
                         <Grid item xs={6}>
                             <Grid container justifyContent="flex-start">
                                 <Grid item>
-                                    <Typography variant='subtitle2' sx={{ mb: 1 }}>
+                                    <Typography variant='subtitle2' sx={{mb: 1, fontWeight: 'bold'}}>
                                         customer
                                     </Typography>
                                 </Grid>
-                                <FormControl sx={{ width: '100%' }}>
+                                <FormControl sx={{width: '100%'}}>
                                     <TextField
                                         variant="outlined"
                                         {...formik.getFieldProps('customer')}
@@ -98,11 +118,11 @@ export const OrderProfile = () => {
                         <Grid item xs={6}>
                             <Grid container justifyContent="flex-start">
                                 <Grid item>
-                                    <Typography variant='subtitle2' sx={{ mb: 1 }}>
+                                    <Typography variant='subtitle2' sx={{mb: 1, fontWeight: 'bold'}}>
                                         trackingNo
                                     </Typography>
                                 </Grid>
-                                <FormControl sx={{ width: '100%' }}>
+                                <FormControl sx={{width: '100%'}}>
                                     <TextField
                                         variant="outlined"
                                         {...formik.getFieldProps('trackingNo')}
@@ -113,11 +133,11 @@ export const OrderProfile = () => {
                         <Grid item xs={6}>
                             <Grid container justifyContent="flex-start">
                                 <Grid item>
-                                    <Typography variant='subtitle2' sx={{ mb: 1 }}>
+                                    <Typography variant='subtitle2' sx={{mb: 1, fontWeight: 'bold'}}>
                                         consignee
                                     </Typography>
                                 </Grid>
-                                <FormControl sx={{ width: '100%' }}>
+                                <FormControl sx={{width: '100%'}}>
                                     <TextField
                                         variant="outlined"
                                         {...formik.getFieldProps('consignee')}
@@ -128,11 +148,11 @@ export const OrderProfile = () => {
                         <Grid item xs={6}>
                             <Grid container justifyContent="flex-start">
                                 <Grid item>
-                                    <Typography variant='subtitle2' sx={{ mb: 1 }}>
+                                    <Typography variant='subtitle2' sx={{mb: 1, fontWeight: 'bold'}}>
                                         status
                                     </Typography>
                                 </Grid>
-                                <FormControl sx={{ width: '100%' }}>
+                                <FormControl sx={{width: '100%'}}>
                                     <TextField
                                         variant="outlined"
                                         {...formik.getFieldProps('status')}
@@ -141,22 +161,30 @@ export const OrderProfile = () => {
                             </Grid>
                         </Grid>
                     </Grid>
+                    <hr style={{
+                        width: "100%",
+                        border: 'none',
+                        borderBottom: "1px solid #ccc",
+                        marginTop: 35,
+                        marginBottom: 0
+                    }}/>
                     <Grid container justifyContent="flex-end">
                         <Grid item xs={1} mt={2} mr={2}>
-                            <Button type="submit" variant="contained" color="primary" fullWidth>
+                            <Button variant="contained" color="primary" fullWidth
+                                    onClick={redirectBackToShipmentsTable}>
                                 Back
                             </Button>
                         </Grid>
                         <Grid item xs={1} mt={2}>
-                                <Button type="submit" variant="contained" fullWidth
-                                        sx={{backgroundColor: '#6cce96', '&:hover': {backgroundColor: '#4ea27d',},}}>
-                                    Submit
-                                </Button>
+                            <Button type="submit" variant="contained" fullWidth
+                                    sx={{backgroundColor: '#6cce96', '&:hover': {backgroundColor: '#4ea27d',},}}>
+                                Submit
+                            </Button>
                         </Grid>
                     </Grid>
                 </Paper>
             </form>
         </Box>
-    );
+    )
 };
 

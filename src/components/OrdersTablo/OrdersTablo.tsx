@@ -4,12 +4,14 @@ import TableCell from "@mui/material/TableCell";
 const OrdersTablo = () => {
     return (
         <>
-            <TableCell>orderNo</TableCell>
-            <TableCell align="left">date</TableCell>
-            <TableCell align="left">customer</TableCell>
-            <TableCell align="left">trackingNo</TableCell>
-            <TableCell align="left">status</TableCell>
-            <TableCell align="left">consignee</TableCell>
+            <TableCell>ORDERNO</TableCell>
+            <TableCell align="left">DATE</TableCell>
+            <TableCell align="left">CUSTOMER</TableCell>
+            <TableCell align="left">TRACKINGNO</TableCell>
+            <TableCell align="left">STATUS</TableCell>
+            <TableCell align="left">CONSIGNEE</TableCell>
+            <TableCell align="left"></TableCell>
+            <TableCell align="left"></TableCell>
         </>)
 
 };

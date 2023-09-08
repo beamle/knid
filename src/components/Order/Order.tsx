@@ -6,23 +6,24 @@ import {OrderType, setOrderToUpdateAC} from "./reducers/orders-reducer";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../store";
 import CancelIcon from '@mui/icons-material/Cancel';
+import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 
 
 export const Order = ({order, deleteOrderHandler}: OrderPropsType) => {
     const {orderNo, date, customer, trackingNo, status, consignee} = order;
-    // const appStatus = useSelector<AppRootStateType, AppStatusTypes>(state => state.app.status)
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
 
-    const delereOrder = useCallback(() => {
+    const deleteOrder = useCallback(() => {
         deleteOrderHandler(orderNo)
     }, [orderNo, deleteOrderHandler])
 
-    const updateOrder = () => {
+    const updateOrder = useCallback(() => {
         dispatch(setOrderToUpdateAC(order))
         navigate(`/orderProfile/${orderNo}`)
-    }
+    }, [dispatch, navigate, order, orderNo])
+
 
     return (
         <TableRow>
@@ -32,13 +33,17 @@ export const Order = ({order, deleteOrderHandler}: OrderPropsType) => {
             <TableCell align="left">{trackingNo}</TableCell>
             <TableCell align="left">{status}</TableCell>
             <TableCell align="left">{consignee}</TableCell>
-            <TableCell align="left">
+            <TableCell align="right">
                 <MyButton
-                          callback={updateOrder} variant="contained" color="#00D4FFFF">Change</MyButton>
+                    callback={updateOrder} variant="contained" backgroundColor="#00D4FFFF"
+                    focusColor="#03add0"><EventRepeatIcon/>
+                </MyButton>
             </TableCell>
             <TableCell align="left">
                 <MyButton
-                    callback={delereOrder} variant="contained" color="#E82C55FF"><CancelIcon/></MyButton>
+                    callback={deleteOrder} variant="contained" backgroundColor="#E82C55FF"
+                    focusColor="#e70838"><CancelIcon/>
+                </MyButton>
             </TableCell>
         </TableRow>
     );

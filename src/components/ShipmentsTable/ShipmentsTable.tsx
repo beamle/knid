@@ -30,11 +30,10 @@ export default function ShipmentsTable() {
 
 
     return (
-
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="table">
-                <TableHead>
-                    <TableRow>
+            <Table sx={{ minWidth: 650}} aria-label="table">
+                <TableHead sx={{backgroundColor: '#dfdfdf' }} >
+                    <TableRow >
                         <OrdersTablo/>
                     </TableRow>
                 </TableHead>

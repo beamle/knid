@@ -1,27 +1,31 @@
 const initialState: AppReducerInitialStateType = {
     error: null,
-    status: "updating-info"
+    status: "idle"
 }
 
 export const appReducer = (state: AppReducerInitialStateType = initialState, action: ActionsType): AppReducerInitialStateType => {
     switch (action.type) {
         case "SET-ERROR":
             return {...state, error: action.error}
+        case "SET-STATUS":
+            return {...state, status: action.status}
         default:
             return state
     }
 }
 
 //AC
-const setError = (error: string | null) => ({type: "SET-ERROR", error} as const)
+export const setErrorAC = (error: string | null) => ({type: "SET-ERROR", error} as const)
+export const setStatusAC = (status: AppStatusTypes) => ({type: "SET-STATUS", status} as const)
 //TODO set Status to app "loading", "success" ,"failed","idle"
 //types
-type ActionsType = ReturnType<typeof setError>
+export type SetAppStatusType = ReturnType<typeof setStatusAC>
+type ActionsType = ReturnType<typeof setErrorAC> | SetAppStatusType
 
 type AppReducerInitialStateType = {
     error: null | string
     status: AppStatusTypes
 }
 
-export type AppStatusTypes = "idle" | "updating-info"
+export type AppStatusTypes = "idle" | "updating-info" | "loading"
 

@@ -2,11 +2,11 @@ import Button from '@mui/material/Button';
 import React, {ReactNode} from 'react';
 
 
-const MyButton = ({ callback, variant, color, children }: MyButtonProps) => {
+const MyButton = ({ callback, variant, backgroundColor, focusColor, children }: MyButtonProps) => {
     return (
         <Button
             variant={variant}
-            sx={{ height: 50, width: 75, backgroundColor: color}}
+            sx={{ height: 50, width: 75, backgroundColor: backgroundColor, '&:hover': {backgroundColor: focusColor,}}}
             onClick={callback}
         >
             {children}
@@ -19,8 +19,9 @@ export default MyButton;
 // types
 type ButtonVariantTypes = "contained" | "outlined" ;
 type MyButtonProps = {
-    callback?: () => void;
+    callback?: () => void
     children: ReactNode
-    variant: ButtonVariantTypes;
-    color: string;
+    variant: ButtonVariantTypes
+    backgroundColor: string
+    focusColor: string
 };
