@@ -1,5 +1,6 @@
-const initialState = {
-    error: null
+const initialState: AppReducerInitialStateType = {
+    error: null,
+    status: "updating-info"
 }
 
 export const appReducer = (state: AppReducerInitialStateType = initialState, action: ActionsType): AppReducerInitialStateType => {
@@ -19,5 +20,8 @@ type ActionsType = ReturnType<typeof setError>
 
 type AppReducerInitialStateType = {
     error: null | string
+    status: AppStatusTypes
 }
+
+export type AppStatusTypes = "idle" | "updating-info"
 

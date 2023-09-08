@@ -1,7 +1,7 @@
 import {ordersReducer, setOrdersAC} from "../reducers/orders-reducer";
 
 test("orders should be fetched and state changed to fetched data", () => {
-    const startState = {orders: []}
+    const startState = {orders: [], orderToUpdate: null}
     const data = [
         {
             "orderNo": "zz-450581-11385595-4210084",

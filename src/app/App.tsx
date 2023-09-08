@@ -1,13 +1,20 @@
 import React from 'react';
 import './App.css';
-import TableFC from "../components/Table/Table";
+import ShipmentsTable from "../components/ShipmentsTable/ShipmentsTable";
+import {Route, Routes } from 'react-router-dom';
+import {OrderProfile} from "../components/Order/OrderProfile/OrderProfile";
 
 function App() {
 
 
   return (
     <div className="App">
-      <TableFC/>
+        <Routes>
+            <Route>
+                <Route path="/orderProfile" element={<OrderProfile/>}/>
+                <Route path="/" element={<ShipmentsTable/>}/>
+            </Route>
+        </Routes>
     </div>
   );
 }

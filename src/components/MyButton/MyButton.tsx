@@ -2,13 +2,13 @@ import Button from '@mui/material/Button';
 import React, {ReactNode} from 'react';
 
 type MyButtonProps = {
-    deleteOrderHandler?: () => void
+    callback?: () => void
     children: ReactNode
 }
 
-const MyButton = ({deleteOrderHandler, children}: MyButtonProps) => {
+const MyButton = ({callback, children}: MyButtonProps) => {
     return (
-        <Button onClick={deleteOrderHandler}>{children}</Button>
+        <Button onClick={callback}>{children}</Button>
     );
 };
 

@@ -3,11 +3,13 @@ import thunk, {ThunkDispatch} from 'redux-thunk';
 import { applyMiddleware} from 'redux';
 import { useDispatch } from "react-redux";
 import {ordersReducer} from "./components/Order/reducers/orders-reducer";
+import {appReducer} from "./app/reducers/app-reducer";
 
 
 
 const middleware = applyMiddleware(thunk);
 const rootReducers = combineReducers({
+    app: appReducer,
     orders: ordersReducer
 
 })
