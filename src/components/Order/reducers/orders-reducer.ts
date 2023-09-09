@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {ordersAPI} from "../../../api/ordersAPI";
-import {SetAppStatusType, setStatusAC} from "../../../app/reducers/app-reducer";
+import {SetAppErrorType, SetAppStatusType, setErrorAC, setStatusAC} from "../../../app/reducers/app-reducer";
+import {AxiosError} from "axios";
 
 const initialState = {
     orders: [],
@@ -16,7 +17,10 @@ export const ordersReducer = (state: OrdersReducerStateType = initialState, acti
         case "orders/SET-ORDER-TO-UPDATE":
             return {...state, orderToUpdate: {...action.orderToUpdate}}
         case "orders/UPDATE-ORDER":
-            return {...state, orders: state.orders.map(order => order.orderNo === action.newOrder.orderNo ? {...order, ...action.newOrder} : order)}
+            return {
+                ...state,
+                orders: state.orders.map(order => order.orderNo === action.newOrder.orderNo ? {...order, ...action.newOrder} : order)
+            }
         default:
             return state
     }
@@ -34,8 +38,15 @@ export const fetchOrdersTC = () => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setStatusAC('loading'))
     ordersAPI.getOrders()
         .then(res => {
-            dispatch(setOrdersAC(res.data))
-            dispatch(setStatusAC('idle'))
+            if (res.status === 200) {
+                dispatch(setOrdersAC(res.data))
+                dispatch(setStatusAC('idle'))
+            } else {
+                dispatch(setErrorAC("Some server error!"))
+            }
+        })
+        .catch((err: AxiosError) => {
+            dispatch(setErrorAC(err.message))
         })
 }
 
@@ -46,25 +57,29 @@ export const deleteOrderTC = (orderNo: string) => (dispatch: Dispatch<ActionsTyp
             if (res.status === 200) {
                 dispatch(deleteOrderAC(orderNo))
                 dispatch(setStatusAC('idle'))
+            } else {
+                dispatch(setErrorAC("Some server error!"))
             }
-            else {
-
-            }
+        })
+        .catch((err: AxiosError) => {
+            dispatch(setErrorAC(err.message))
         })
 }
 
 
 export const updateOrderTC = (newOrder: OrderType) => (dispatch: Dispatch<ActionsType>) => {
-        dispatch(setStatusAC('loading'))
+    dispatch(setStatusAC('loading'))
     ordersAPI.updateOrder(newOrder)
         .then(res => {
             if (res.status === 200) {
                 dispatch(updateOrderAC(newOrder))
                 dispatch(setStatusAC('idle'))
+            } else {
+                dispatch(setErrorAC("Some server error!"))
             }
-            else {
-
-            }
+        })
+        .catch((err: AxiosError) => {
+            dispatch(setErrorAC(err.message))
         })
 }
 
@@ -74,7 +89,7 @@ type ActionsType =
     ReturnType<typeof deleteOrderAC> |
     ReturnType<typeof setOrderToUpdateAC> |
     ReturnType<typeof updateOrderAC> |
-    SetAppStatusType
+    SetAppStatusType | SetAppErrorType
 
 type OrdersReducerStateType = {
     orders: OrderType[]

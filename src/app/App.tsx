@@ -7,6 +7,7 @@ import {createTheme, LinearProgress, ThemeProvider} from "@mui/material";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../store";
 import {AppStatusTypes} from "./reducers/app-reducer";
+import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 
 const theme = createTheme({
     typography: {
@@ -20,6 +21,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <div className="App">
+                <ErrorSnackbar/>
                 <div className="header"></div>
                 {appStatus === "loading" && <LinearProgress/>}
                 <Routes>

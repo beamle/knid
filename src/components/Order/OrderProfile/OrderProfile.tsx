@@ -2,12 +2,16 @@ import React from 'react';
 import {OrderType, updateOrderTC} from '../reducers/orders-reducer';
 import {useSelector} from 'react-redux';
 import {AppRootStateType, useAppDispatch} from '../../../store';
-import {Box, Button, Grid, LinearProgress, Paper, Typography,} from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import {useFormik} from 'formik';
 import {useNavigate} from "react-router-dom";
-import {AppStatusTypes, setStatusAC} from "../../../app/reducers/app-reducer";
+import {setStatusAC} from "../../../app/reducers/app-reducer";
 import './OrderProfile.css';
 
 interface Values {
@@ -71,15 +75,15 @@ export const OrderProfile = () => {
 
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
-                            <Grid container justifyContent="flex-start">
-                                <Grid item>
+                            <Grid container justifyContent="flex-start" >
+                                <Grid item >
                                     <Typography variant='subtitle2' sx={{mb: 1, fontWeight: 'bold'}}>
                                         orderNo
                                     </Typography>
                                 </Grid>
                                 <FormControl sx={{width: '100%'}}>
                                     <TextField
-                                        variant="outlined"
+                                        variant="outlined" sx={{backgroundColor: '#f7f7f7'}}
                                         {...formik.getFieldProps('orderNo')}
                                     />
                                 </FormControl>
@@ -94,7 +98,7 @@ export const OrderProfile = () => {
                                 </Grid>
                                 <FormControl sx={{width: '100%'}}>
                                     <TextField
-                                        variant="outlined"
+                                        variant="outlined" sx={{backgroundColor: '#f7f7f7'}}
                                         {...formik.getFieldProps('date')}
                                     />
                                 </FormControl>
@@ -109,7 +113,7 @@ export const OrderProfile = () => {
                                 </Grid>
                                 <FormControl sx={{width: '100%'}}>
                                     <TextField
-                                        variant="outlined"
+                                        variant="outlined" sx={{backgroundColor: '#f7f7f7'}}
                                         {...formik.getFieldProps('customer')}
                                     />
                                 </FormControl>
@@ -124,7 +128,7 @@ export const OrderProfile = () => {
                                 </Grid>
                                 <FormControl sx={{width: '100%'}}>
                                     <TextField
-                                        variant="outlined"
+                                        variant="outlined" sx={{backgroundColor: '#f7f7f7'}}
                                         {...formik.getFieldProps('trackingNo')}
                                     />
                                 </FormControl>
@@ -139,7 +143,7 @@ export const OrderProfile = () => {
                                 </Grid>
                                 <FormControl sx={{width: '100%'}}>
                                     <TextField
-                                        variant="outlined"
+                                        variant="outlined" sx={{backgroundColor: '#f7f7f7'}}
                                         {...formik.getFieldProps('consignee')}
                                     />
                                 </FormControl>
@@ -154,7 +158,7 @@ export const OrderProfile = () => {
                                 </Grid>
                                 <FormControl sx={{width: '100%'}}>
                                     <TextField
-                                        variant="outlined"
+                                        variant="outlined" sx={{backgroundColor: '#f7f7f7'}}
                                         {...formik.getFieldProps('status')}
                                     />
                                 </FormControl>

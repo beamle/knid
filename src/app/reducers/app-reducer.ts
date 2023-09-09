@@ -20,9 +20,10 @@ export const setStatusAC = (status: AppStatusTypes) => ({type: "SET-STATUS", sta
 //TODO set Status to app "loading", "success" ,"failed","idle"
 //types
 export type SetAppStatusType = ReturnType<typeof setStatusAC>
-type ActionsType = ReturnType<typeof setErrorAC> | SetAppStatusType
+export type SetAppErrorType = ReturnType<typeof setErrorAC>
+type ActionsType = SetAppErrorType | SetAppStatusType
 
-type AppReducerInitialStateType = {
+export type AppReducerInitialStateType = {
     error: null | string
     status: AppStatusTypes
 }
