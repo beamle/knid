@@ -17,7 +17,6 @@ export const appReducer = (state: AppReducerInitialStateType = initialState, act
 //AC
 export const setErrorAC = (error: string | null) => ({type: "SET-ERROR", error} as const)
 export const setStatusAC = (status: AppStatusTypes) => ({type: "SET-STATUS", status} as const)
-//TODO set Status to app "loading", "success" ,"failed","idle"
 //types
 export type SetAppStatusType = ReturnType<typeof setStatusAC>
 export type SetAppErrorType = ReturnType<typeof setErrorAC>

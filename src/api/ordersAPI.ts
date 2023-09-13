@@ -8,7 +8,7 @@ const instance = axios.create({
 //could be used if we deal with server side API
 
 
-//all requests are using get query since I work with txt file.
+//all requests are using get query since I didn't have access to api
 export const ordersAPI = {
     getOrders: () => {
         return axios.get<OrderType[]>("/Shipments.txt");

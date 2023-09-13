@@ -1,4 +1,3 @@
-import {ordersReducer, updateOrderAC} from "../../components/Order/reducers/orders-reducer";
 import {appReducer, AppReducerInitialStateType, setErrorAC, setStatusAC} from "./app-reducer";
 
 const startState: AppReducerInitialStateType = {
