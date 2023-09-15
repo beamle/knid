@@ -48,7 +48,6 @@ export const Order = ({order, deleteOrderHandler}: OrderPropsType) => {
         </TableRow>
     );
 };
-//TODO: vvesti status idle and updating. If updating then show
 
 type OrderPropsType = {
     order: OrderType
